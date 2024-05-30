@@ -3,17 +3,22 @@ const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const schema = require("./Graphql/schema");
 const resolvers = require("./Graphql/resolvers");
-
+const dotenv = require("dotenv")
 const app = express();
+dotenv.config();
+const MongoUrl = process.env.DB;
+const PORT = process.env.port 
+if (!MongoUrl) {
+  console.error("Error: MongoDB connection string is not defined in environment variables.");
+  process.exit(1);
+}
+mongoose.connect(MongoUrl)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err.message);
+    process.exit(1);
+  });
 
-// Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/graphql-demo", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
-});
 
 app.use(
   "/",
@@ -24,6 +29,6 @@ app.use(
   })
 );
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000/");
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}/`);
 });
