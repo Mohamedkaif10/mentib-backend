@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const typeDefs = require('./Graphql/schema');
-const resolvers = require('./Graphql/resolvers');
+const resolvers = require('./Resolvers/userresolvers');
 
 const MongoUrl = process.env.DB;
 const PORT = process.env.PORT || 4000;
@@ -25,5 +25,5 @@ mongoose.connect(MongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen({ port: PORT }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
+  console.log(`Server ready at ${url}`);
 });
