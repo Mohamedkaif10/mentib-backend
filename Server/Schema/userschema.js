@@ -11,7 +11,10 @@ const typeDefs = gql`
     id: ID!
     name: String!
     email: String!
-    password: String!
+    phoneno: Number!,
+    age:Number!,
+    gender:String!,
+    city:String
   }
 `;
 
