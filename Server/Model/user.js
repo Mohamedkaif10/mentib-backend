@@ -10,10 +10,31 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  password: {
+  age: {
+    type: Number,
+    required: true
+  },
+  gender: {
     type: String,
     required: true
-  }
+  },
+  phone: {
+    type: Number,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  usedCoins: {
+    type: Number,
+    required: true
+  },
+  availableCoins: {
+    type: Number,
+    required: true
+  },
+
 });
 
 module.exports = mongoose.model('User', userSchema);

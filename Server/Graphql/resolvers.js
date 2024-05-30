@@ -1,9 +1,11 @@
 const User = require("../Model/User");
 
 const resolvers = {
-  getUser: async ({ id }) => {
+  getUser: async ({ email }) => {
     try {
-      const user = await User.findById(id);
+      const user = await User.findOne({
+        email: email
+      });
       return user;
     } catch (err) {
       throw new Error("Error retrieving user");
@@ -17,16 +19,16 @@ const resolvers = {
       throw new Error("Error retrieving users");
     }
   },
-  createUser: async ({ name, email, password }) => {
+  createUser: async ({ name, email, age, gender, phone, city }) => {
     try {
-      const user = new User({ name, email, password });
+      const user = new User({ name, email, age, gender, phone, city, usedCoins: 0, availableCoins: 0 });
       await user.save();
       return user;
     } catch (err) {
       throw new Error("Error creating user");
     }
   },
-  updateUser: async ({ id, name, email, password }) => {
+  updateUser: async ({ id, name, email, age, gender, phone, city }) => {
     try {
       const user = await User.findByIdAndUpdate(
         id,

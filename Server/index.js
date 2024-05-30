@@ -7,7 +7,11 @@ const dotenv = require("dotenv")
 const app = express();
 dotenv.config();
 const MongoUrl = process.env.DB;
-const PORT = process.env.port 
+const PORT = process.env.port
+
+// const MongoUrl = "mongodb://localhost:27017/graphql"
+// const PORT = 4000;
+
 if (!MongoUrl) {
   console.error("Error: MongoDB connection string is not defined in environment variables.");
   process.exit(1);
