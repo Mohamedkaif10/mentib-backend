@@ -1,4 +1,4 @@
-const Counsellor = require('../models/counsellor');
+const Counsellor = require('../Model/counsellorModel');
 
 const counsellorResolvers = {
   Query: {
