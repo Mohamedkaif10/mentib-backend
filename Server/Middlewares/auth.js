@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         }).then(response => {
             return response.json();
         }).then(data => {
-            console.log(data);
+            console.log("DATA", data);
             const isVerified = data.email_verified;
             console.log("isVerified", isVerified);
             data.email_verified === 'true' ? next() : res.status(401).json({
