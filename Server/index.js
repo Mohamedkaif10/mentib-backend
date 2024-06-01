@@ -1,20 +1,17 @@
 const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 // const { ApolloServer } = require('apollo-server');
-const dotenv = require('dotenv');
 const express = require('express');
-
-dotenv.config();
 
 const typeDefs = require('./Graphql/schema');
 const resolvers = require('./Graphql/resolver');
 
-// const MongoUrl = process.env.DB;
-// const PORT = process.env.PORT || 4000;
+const MongoUrl = process.env.DB_URL;
+const PORT = process.env.PORT;
 
-const MongoUrl = 'mongodb://localhost:27017/graphql';
-const PORT = 4000;
 
+console.log("MongoUrl", MongoUrl);
+console.log("PORT", PORT);
 if (!MongoUrl) {
   console.error("Error: MongoDB connection string is not defined in environment variables.");
   process.exit(1);
@@ -31,9 +28,11 @@ const server = new ApolloServer({ typeDefs, resolvers});
 const app = express();
 
 // New code
-const authMiddleware = require('./Middlewares/auth.js');
+const authMiddleware = require('./Middlewares/googleVerification.js');
+const verifyToken = require('./Middlewares/verifyToken.js');
 
-app.use('/', authMiddleware);
+app.use('/googleVerification', authMiddleware);
+app.use('/graphql', verifyToken);
 
 async function startApolloServer() {
     const server = new ApolloServer({
@@ -43,7 +42,7 @@ async function startApolloServer() {
 
     await server.start(); // Start the server
 
-    server.applyMiddleware({ app }); // Apply Apollo middleware
+    server.applyMiddleware({ app, path: "/graphql" }); // Apply Apollo middleware
 
     app.listen({ port: PORT }, () =>
         console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)

@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken');
+const path = require('path');
+
+require('dotenv').config({path: path.resolve(__dirname, '../config.env')});
 
 module.exports = (req, res, next) => {
     try {
@@ -15,9 +19,17 @@ module.exports = (req, res, next) => {
             console.log("DATA", data);
             const isVerified = data.email_verified;
             console.log("isVerified", isVerified);
-            data.email_verified === 'true' ? next() : res.status(401).json({
-                message: "unauthorized user"
-            });
+            if (isVerified === 'true') {
+                // User is verified, create a JWT token
+                const jwtToken = jwt.sign({ email: data.email }, process.env.JWT_SECRET);
+
+                // Send the JWT token in the response
+                res.status(200).send({ auth: true, token: jwtToken });
+            } else {
+                res.status(401).json({
+                    message: "unauthorized user"
+                });
+            }
         })
     } catch (error) {
         return res.status(401).json({
