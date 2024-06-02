@@ -15,7 +15,6 @@ module.exports = (req, res, next) => {
             return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
         }
 
-        // if everything good, save to request for use in other routes
         console.log("token verified", decoded);
         next();
     });

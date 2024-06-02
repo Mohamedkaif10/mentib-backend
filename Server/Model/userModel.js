@@ -26,15 +26,25 @@ const userModel = new mongoose.Schema({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    required: true,
+    enum: ['mentor', 'mentee']
+  },
   usedCoins: {
     type: Number,
-    required: true
+    required: function() {
+      return this.role === 'mentee';
+    },
+    default: 0
   },
   availableCoins: {
     type: Number,
-    required: true
-  },
-
+    required: function() {
+      return this.role === 'mentee';
+    },
+    default: 0
+  }
 });
 
 module.exports = mongoose.model('User', userModel);

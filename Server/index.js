@@ -1,16 +1,15 @@
-const { ApolloServer } = require('apollo-server-express');
+// const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
-// const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const express = require('express');
 
 const typeDefs = require('./Graphql/schema');
 const resolvers = require('./Graphql/resolver');
-
+require('dotenv').config()
 const MongoUrl = process.env.DB_URL;
-const PORT = process.env.PORT;
+const PORT = process.env.Port;
 
-
-console.log("MongoUrl", MongoUrl);
+console.log("MongoUrl is", MongoUrl);
 console.log("PORT", PORT);
 if (!MongoUrl) {
   console.error("Error: MongoDB connection string is not defined in environment variables.");
@@ -28,32 +27,31 @@ const server = new ApolloServer({ typeDefs, resolvers});
 const app = express();
 
 // New code
-const authMiddleware = require('./Middlewares/googleVerification.js');
-const verifyToken = require('./Middlewares/verifyToken.js');
+// const authMiddleware = require('./Middlewares/googleVerification.js');
+// const verifyToken = require('./Middlewares/verifyToken.js');
 
-app.use('/googleVerification', authMiddleware);
-app.use('/graphql', verifyToken);
+// app.use('/googleVerification', authMiddleware);
+// app.use('/graphql', verifyToken);
 
-async function startApolloServer() {
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers
-    });
+// async function startApolloServer() {
+//     const server = new ApolloServer({
+//         typeDefs,
+//         resolvers
+//     });
 
-    await server.start(); // Start the server
+//     await server.start(); 
+//     server.applyMiddleware({ app, path: "/graphql" }); 
 
-    server.applyMiddleware({ app, path: "/graphql" }); // Apply Apollo middleware
+//     app.listen({ port: PORT }, () =>
+//         console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+//     );
 
-    app.listen({ port: PORT }, () =>
-        console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)
-    );
+// }
 
-}
-
-startApolloServer(); // Call the function to start the server
+// startApolloServer(); 
 
 
 // Old Server code
-// server.listen().then(({ url }) => {
-//     console.log(`🚀 Server ready at ${url}`);
-// });
+server.listen().then(({ url }) => {
+    console.log(`🚀 Server ready at ${url}`);
+});
