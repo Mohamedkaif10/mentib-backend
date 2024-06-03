@@ -14,13 +14,14 @@ const typeDefs = gql`
     phone: Int!,
     age:Int!,
     gender:String!,
+    role: String!,
     city:String!,
     usedCoins: Int!,
     availableCoins: Int!
   }
   
   type Mutation {
-    createUser(name: String!, email: String!, age: Int!, gender: String!, phone: Int!, city: String!): User
+    createUser(name: String!, email: String!, age: Int!, gender: String!, phone: Int!, city: String!, role: String!): User
     updateUser(id: ID!, name: String, email: String, age: Int, gender: String, phone: Int, city: String): User
     deleteUser(id: ID!): User
   }

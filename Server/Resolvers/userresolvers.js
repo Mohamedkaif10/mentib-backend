@@ -25,9 +25,13 @@ const resolvers = {
     },
   },
   Mutation: {
-    createUser: async (_, { name, email, age, gender, phone, city }) => {
+    createUser: async (_, { name, email, age, gender, phone, city, role }) => {
       try {
-        const user = new User({ name, email, age, gender, phone, city, usedCoins: 0, availableCoins: 0 });
+        const user = new User({
+          name: name, email: email, age: age,
+          gender: gender, role: role, phone: phone,
+          city: city, usedCoins: 0, availableCoins: 0
+        });
         await user.save();
         return user;
       } catch (err) {
