@@ -17,7 +17,7 @@ const communityTypeDefs = gql`
     email: String!
     age: Int!
     gender: String!
-    phone: Int!
+    phone: String!
     city: String!
     role: String!
     usedCoins: Int
