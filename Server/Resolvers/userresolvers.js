@@ -12,9 +12,9 @@ const resolvers = {
         throw new Error("Error retrieving user");
       }
     },
-    getUsers: async () => {
+    getUsers: async (_, {role}) => {
       try {
-        const users = await User.find();
+        const users = await User.find({role: role});
         return users;
       } catch (err) {
         throw new Error("Error retrieving users");
