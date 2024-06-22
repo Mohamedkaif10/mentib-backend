@@ -7,6 +7,7 @@ const communityTypeDefs = gql`
     dateCreated: String!
     noofpeople: Int!
     createdby: User!
+    topic: String!
     people: [User!]
   }
 
@@ -16,7 +17,7 @@ const communityTypeDefs = gql`
     email: String!
     age: Int!
     gender: String!
-    phone: Int!
+    phone: String!
     city: String!
     role: String!
     usedCoins: Int
@@ -29,7 +30,8 @@ const communityTypeDefs = gql`
   }
 
   type Mutation {
-    createCommunity(name: String!, dateCreated: String!, noofpeople: Int, createdby: ID!, people: [ID!]): Community
+    createCommunity(name: String!, dateCreated: String!, noofpeople: Int, createdby: ID!, topic: String! people: [ID!]): Community
+    joinCommunity(communityId: ID!, userId: ID!): Community
     updateCommunity(id: ID!, name: String, noofpeople: Int, createdby: ID, people: [ID!]): Community
     deleteCommunity(id: ID!): Boolean
   }

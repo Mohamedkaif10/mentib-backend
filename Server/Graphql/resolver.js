@@ -4,6 +4,6 @@ const counsellorResolvers = require('../Resolvers/counsellorresolvers');
 const eventResolvers = require('../Resolvers/eventsresolver'); 
 const userResolvers = require('../Resolvers/userresolvers');
 const communityResolvers = require('../Resolvers/communityresolver')
-const resolvers = mergeResolvers([counsellorResolvers, eventResolvers, userResolvers]);
+const resolvers = mergeResolvers([counsellorResolvers, eventResolvers, userResolvers, communityResolvers]);
 
 module.exports = resolvers;

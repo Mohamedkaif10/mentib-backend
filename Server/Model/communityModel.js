@@ -6,6 +6,7 @@ const communityModel = new Schema({
   dateCreated: { type: Date, required: true },
   noofpeople:{type:Number,required:true,default:0},
   createdby: { type: String, required: true ,ref:'User'},
+  topic: { type: String, required: true },
   people: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
